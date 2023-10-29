@@ -1,0 +1,119 @@
+\documentclass{beamer}
+\usepackage{../../format}
+
+\title{Lecture 1}
+\subtitle{Important Concepts In Set Theory}
+\author{}
+\date{\today}
+
+\begin{document}
+		\maketitle
+
+		\begin{frame}{Sets}
+				\begin{definition}[Sets]
+						Put simply, a \alert{set} is simply a collection of objects. Namely, in sets
+						\begin{itemize}
+								\item The order of items does not matter 
+								\item The number of occurences of an item does not matter
+						\end{itemize}
+				\end{definition}
+				For example, 
+				\begin{itemize}
+						\item As sets, $\{1, 2, 3\}$ is the same set as $\{3, 1, 2\}$ and as $\{2, 1, 3\}$ since \emph{order does not matter}
+						\item Also, $\{1, 1, 2, 3\}$ is the same set as $\{1, 2, 3\}$ since the \emph{number of occurences does not matter}
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Representing Sets}
+				How do we write out sets? 
+				\begin{itemize}
+						\item If the set is finite, we may simply list out its elements 
+								\begin{equation*}
+										\{1, 2, 3, 4, 5, 6\}
+								\end{equation*}
+						\item We may also do the same thing if the set is infinite 
+								\begin{equation*}
+										\{1, 2, 3, 4, 5, ...\}
+								\end{equation*}
+				\end{itemize}
+				But the latter risks being ambigious in certain situations. 
+		\end{frame}
+
+		\begin{frame}{Representing Sets}
+				\footnotesize
+				For infinite sets, we may avoid ambiguity by using \alert{set-builder notation}. 
+				\begin{definition}[Set-Builder Notation (Parametric Form)]
+						We may write a set as 
+						\begin{equation*}
+								\{f(t) : t\in T\}
+						\end{equation*}
+						Here $f$, is some expression which depends on $t$ while $T$ is a set that contains all possible values of $t$. 
+				\end{definition}
+				\begin{definition}[Set-Builder Notation (Conditional Form)]
+						Another way to use set builder notation is as 
+						\begin{equation*}
+								\{t\in T : P(t)\}
+						\end{equation*}
+						Here, $t$ and $T$ are the same as before, but now $P$ is an \emph{open sentence} in $t$. The set contains only the values of $t$ which make $P(t)$ true. 
+				\end{definition}
+				An \alert{open sentence} in $t$ is just a statement whose truth value depends on the value of $t$. 
+		\end{frame}
+
+		\begin{frame}{Special Sets}
+				Some sets are so common in math, they are given special symbols 
+				\begin{itemize}
+						\item $\N$: the set of \alert{natural numbers}
+								\begin{equation*}
+										\N = \{1, 2, 3, 4, 5, ...\}
+								\end{equation*}
+						\item $\Z$: the set of \alert{integers}
+								\begin{equation*}
+										\Z = \{..., -3, -2, -1, 0, 1, 2, 3, ...\}
+								\end{equation*}
+						\item $\Q$: the set of \alert{rational numbers}
+								\begin{equation*}
+										\Q = \left\{ \frac{p}{q} : p, q\in \Z, q \neq 0\right\}
+								\end{equation*}
+						\item $\R$: the set of \alert{real numbers}
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Basic Notation \& Terminology About Sets}
+				\begin{definition}[]
+						Here are some basic definitions regarding sets 
+						\begin{itemize}
+								\item A set need not contain any elements. The \alert{empty set} is the unique set which contains no elements. It is often denoted by $\emptyset$ (commonly) or by $\{\}$ (not really common)
+								\item A set which contains at least one element is said to be \alert{nonempty}. 
+								\item If $A$ is nonempty and $x$ is an element of $A$, we say ``$x$ is a member of $A$'' and write $x\in A$. 
+										\begin{itemize}
+												\item We may also write this as $A \ni x$
+										\end{itemize}
+								\item Likewise, $x\not\in A$ means ``$x$ is not a member of $A$'' 
+										\begin{itemize}
+												\item We may also write $A \not \ni x$
+										\end{itemize}
+						\end{itemize}
+				\end{definition}
+		\end{frame}
+
+		\begin{frame}{Examples}
+				\begin{example}[]
+						What is the set $E$ defined as $E = \{2k : k\in \Z\}$? 
+				\end{example}
+				\begin{itemize}
+						\item We have that $0\in E$, $2\in E$, and $-110\in E$ for example 
+						\item However, $1\not\in E$, $-19\not\in E$, and $9\not\in E$
+				\end{itemize}
+
+				\begin{example}[]
+						What is the set $T$ defined as 
+						\begin{equation*}
+								T = \left\{x\in\R : x \neq \frac{a}{b} \text{ for all integers $a$ and $b$}, b \neq 0\right\}
+						\end{equation*}
+				\end{example}
+				\begin{itemize}
+						\item We have $\pi \in T$ and $\sqrt{2}\in T$ 
+						\item But $0\not\in T$, $-3\not\in T$, $\frac{3}{4}\not\in T$
+				\end{itemize}
+		\end{frame}
+\end{document}
