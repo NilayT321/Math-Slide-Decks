@@ -1,0 +1,508 @@
+\documentclass[10pt]{beamer} 
+\usetheme{Madrid} 
+\usepackage{../format} % Required for inserting images 
+
+\title{Banach \& Hilbert Spaces: An Introduction to Functional Analysis} 
+\subtitle{} 
+\author{Nilay Tripathi}
+\date{December 2023}
+
+
+\setbeamertemplate{navigation symbols}{}
+
+\begin{document}
+
+    \maketitle
+
+    \begin{frame}{Introduction To The Topic}
+        This presentation is about Hilbert spaces and Banach spaces and some relevant theorems and results. They are the central objects of study in \alert{functional analysis}. 
+        \begin{itemize}
+            \item Functional analysis itself is a cool mix of: 
+            \begin{itemize}
+                \item Linear algebra (vector spaces)
+                \item Topology 
+                \item Real analysis
+            \end{itemize}
+            \item It has a ton of applications in physics, particularly in quantum mechanics
+            \item We are primarily interested in sets called \alert{function spaces}. 
+            \begin{itemize}
+                \item A vector space where the vectors are functions 
+                \item We also put a topology on the space
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Objectives}
+        In this presentation, I hope to accomplish
+        \begin{itemize}
+            \item High-level review of relevant concepts 
+            \begin{itemize}
+                \item Metric spaces, completeness 
+                \item Linear algebra (vector spaces, basis, dimension)
+            \end{itemize}
+
+            \item Discussion of \alert{continuous linear operators}. 
+            \begin{itemize}
+                \item From vector spaces, we get \emph{linear maps}
+                \item From topology, we study \emph{continuous maps}
+                \item In functional analysis, we study both. How do we combine them together?
+            \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}
+            \item Considered one of the ``four important theorems'' in functional analysis [TODO: decide on a theorem]
+            \begin{itemize}
+                \item The Hahn-Banach Theorem
+                \item The Uniform Boundedness Principle (Banach-Steinhaus Theorem)
+                \item The Open Mapping Theorem
+                \item The Closed Graph Theorem
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \section{Metric Spaces \& Completeness}
+
+    \begin{frame}{Converging Sequence, Cauchy Sequence}
+        \begin{definition}[Converging Sequence]
+            If $X$ is a metric space, a sequence $(x_n)_{n\in\N} \subseteq X$ is said to \alert{converge} to $x_0\in X$ if for all $\varepsilon > 0$ there exists $N_{\varepsilon} \in \N$ such that $d(x_n, x) < \varepsilon$ whenever $n\geq N_{\varepsilon}$. 
+        \end{definition}
+
+        There is a (very similar looking) definition to the notion of a converging sequence: a \alert{Cauchy sequence}. 
+        \begin{definition}[Cauchy Sequence]
+            If $X$ is a metric space, a sequence $(x_n)_{n\in\N} \subseteq X$ is said to be a \alert{Cauchy sequence} if for all $\varepsilon > 0$ there exists $N_{\varepsilon} \in \N$ such that $d(x_n, x_m) < \varepsilon$ when $m, n \geq N_{\varepsilon}$. 
+        \end{definition}
+        Intuitively, a Cauchy sequence is one where the tail of a sequence is eventually arbitrarily small enough. 
+    \end{frame}
+
+    \begin{frame}{Convergent Sequence $\implies$ Cauchy Sequence}
+        \begin{theorem}
+            All convergent sequences are also Cauchy sequences.
+        \end{theorem}
+        \begin{myproof}
+            Suppose that $(x_n)\to x$. Let $\varepsilon > 0$ be arbitrary. Then, there are $N_1, N_2\in\N$ such that 
+            \begin{align*}
+                n\geq N_1 &\implies d(x_n, x) < \frac{\varepsilon}{2} \\ 
+                n\geq N_2 &\implies d(x_m, x) < \frac{\varepsilon}{2}
+            \end{align*}
+            Let $N = \max\{N_1, N_2\}$ and note that $n\geq N$ means 
+            \begin{align*}
+                d(x_n, x_m) &\leq d(x_n, x) + d(x_m, x) \\ 
+                &< \frac{\varepsilon}{2} + \frac{\varepsilon}{2} \\ 
+                &= \varepsilon
+            \end{align*}
+        \end{myproof}
+    \end{frame}
+
+    \begin{frame}{Complete Metric Space}
+        The converse of the previous theorem is the definition of completeness. 
+        \begin{definition}[Complete Metric Space]
+            A metric space $X$ is \alert{complete} if every Cauchy sequence of entries in $X$ has a limit in $X$. 
+        \end{definition}
+        This is the most general form of completeness. Equivalent formulations of completeness in $\R$ are dependent on the ordered field axioms of $\R$. 
+        \begin{itemize}
+            \item Least Upper Bound Property
+            \item Nested Intervals Property
+            \item Bolzano Weierstrass Property
+            \item Monotone Convergence Property
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Example}
+        The metric space $\Q$ (with the usual metric) is not a complete metric space. Consider the sequence 
+        \begin{equation*}
+            (x_n) = (3, 3.1, 3.14, 3.141, 3.1415, 3.14159, ...)
+        \end{equation*}
+        \begin{itemize}
+            \item<1-> This is the sequence of rational approximations to $\pi$. 
+            \item<2-> Note that $x_n\in \Q$ for all $n$. 
+            \item<3-> The limit is $\pi\not\in \Q$. 
+        \end{itemize}
+        \only<4->{Thus, $\Q$ is not a complete metric space.}
+    \end{frame}
+
+    \begin{frame}{Another Example}
+        If $X$ is any set under the discrete metric, then $X$ is complete. 
+        \begin{itemize}
+            \item<1-> Let $(x_n)$ be a Cauchy sequence in $X$. 
+            \item<2-> We claim that $(x_n)$ is eventually constant. This happens say for $\varepsilon = \frac{1}{2}$, for example. 
+            \item<3-> A sequence which is eventually constant is convergent. 
+        \end{itemize}
+        \only<4->{Thus, any Cauchy sequence in $X$ converges, and so $X$ is complete.}
+    \end{frame}
+
+		\begin{frame}{Function Space}
+				\begin{definition}[Function Space]
+						We define the \alert{function space} $C[a,b]$ to be the set of all continuous functions from $[a,b]$ to $\R$. 
+				\end{definition}
+				We can define a metric on the function space as follows
+				\begin{equation*}
+						d(f, g) = \max_{t\in [a,b]} |f(t) - g(t)|
+				\end{equation*}
+				\begin{itemize}
+						\item<1-> Note that the maximum exists since $[a,b]$ is compact. 
+						\item<2-> Conditions 1, 2, and 3 of a metric space are easy to show. The triangle inequality follows from 
+								\begin{equation*}
+										|f(t) - g(t)| \leq |f(t) - h(t)| + |h(t) - g(t)|
+								\end{equation*}
+								and so 
+								\begin{equation*}
+										\max_{t\in [a,b]} |f(t) - g(t)| \leq \max_{t\in [a,b]} |f(t) - h(t)| + \max_{t\in [a,b]} |h(t) - g(t)|
+								\end{equation*}
+				\end{itemize}
+		\end{frame}	
+    
+    \section{Vector Spaces}
+
+    \begin{frame}[plain]
+        Now, we transition into some results about vector spaces.
+    \end{frame}
+
+    \begin{frame}{Linear Independence, Generating Set}
+        \begin{definition}[Linear Independence]
+            Let $V$ be a vector space over a field $\F$. A set $|V| < \infty$ is \alert{linearly independent} if 
+            \begin{equation*}
+                c_1v_1 + c_2v_2 + \cdots + c_nv_n = 0 \implies c_1 = c_2 = \cdots = c_n = 0
+            \end{equation*}
+            where $c_1, ..., c_n\in\F$ and $v_1, ..., v_n\in V$. An infinite set is linear independent if all of its finite subsets are linearly independent.
+        \end{definition}
+
+        \begin{definition}[Spanning Set]
+            Let $V$ be a vector space. 
+            \begin{enumerate}
+                \item If $|S| < \infty \subseteq V$, then the \alert{span} of $S$ is the set of all linear combinations of elements in $S$. 
+                \item The span of an infinite set $S$ is the union of the span of all its finite subsets. 
+                \item If $Y \subseteq X$ is a subspace and $S$ is a set such that $\Span S = Y$, then $S$ is a \alert{generating set} (or \alert{spanning set}) of $Y$. 
+            \end{enumerate}
+        \end{definition}
+    \end{frame}
+
+    \begin{frame}{Basis \& Dimension}
+        \begin{definition}[Basis \& Dimension]
+            Let $V$ be a vector space. 
+            \begin{enumerate}
+                \item A \alert{basis} of $V$ is a linearly independent generating set of $V$. 
+                \item If $\beta$ is a basis of $V$, then the \alert{dimension} of $V$ is defined to be $\Dim V = |\beta|$. 
+                \item If $\Dim V < \infty$, then $V$ is \alert{finite-dimensional}. Otherwise, it is \alert{infinite dimensional}.
+            \end{enumerate}
+        \end{definition}
+        Some things to note 
+        \begin{itemize}
+            \item<2-> Every vector spaces has a basis (for infinite dimensional spaces, this requires axiom of choice). 
+            \item<3-> All bases of finite dimensional vector spaces are of the same size. Hence, $\Dim V$ is well-defined
+        \end{itemize}
+        \only<4->{In functional analysis, we often consider infinite dimensional vector spaces over finite dimensional ones.}
+    \end{frame}
+
+		\begin{frame}{Function Space Is A Vector Space}
+				The function space $C[a,b]$ may be turned into a vector space by defining vector addition and scalar multiplication as follows: 
+				\begin{equation*}
+						(f+g)(t) = f(t) + g(t) 
+				\end{equation*}
+				\begin{equation*}
+						(\alpha f)(t) = \alpha f(t)
+				\end{equation*}
+				The additive identity is the zero function, which maps everything in $[a,b]$ to 0. 
+
+				\begin{block}{}
+						We remark that the function space $C[a,b]$ is an infinite dimensional vector space. 
+				\end{block}
+		\end{frame}
+
+		\begin{frame}{Linear Map}
+				Fundamental maps between vector spaces are linear maps. 
+				\begin{definition}[Linear Map]
+						Suppose $X$ and $Y$ are vector spaces. A map $T: X\to Y$ is said to be \alert{linear} if it preserves linear combinations. That is, 
+						\begin{equation*}
+								T(c_1v_1 + c_2v_2 + \cdots + c_nv_n) = c_1Tv_1 + c_2Tv_2 + \cdots + c_nTv_n
+						\end{equation*}
+						Note that we use the notation $Tx$ to mean $T(x)$. This is a common shorthand used in functional analysis.
+				\end{definition}
+				A consequence of this definition is that linear maps send the identity of $X$ to the identity of $Y$. This is written as $T0 = 0$. 
+				\begin{itemize}
+						\item Here, we note that the $0$ on the left is the identity of $X$ while the $0$ on the right is the identity of $Y$. 
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Example}
+				For function spaces $C[a,b]$ the differentiation operator given by 
+				\begin{equation*}
+						Tf = f'(t)
+				\end{equation*}
+				is a linear operator. This follows from elementary calculus, where we proved 
+				\begin{equation*}
+						(f+g)'(t) = f'(t) + g'(t) 
+				\end{equation*}
+				\begin{equation*}
+						(\alpha f)'(t) = \alpha f'(t)
+				\end{equation*}
+		\end{frame}
+
+		\section{Normed Space \& Banach Spaces}
+
+		\begin{frame}{Norm, Normed Space}
+				\begin{definition}[Norm \& Normed Space]
+						Suppose that $V$ is a vector space. A \alert{norm} on $V$ is a function which maps each $x\in V$ to a scalar in $\F$, denoted $\|x\|$ which satisfies the following properties
+						\begin{enumerate}
+								\item $\|x\| \geq 0$ 
+								\item $\|x\| = 0$ if and only if $x = 0$ 
+								\item $\|\alpha x\| = |\alpha| \|x\|$
+								\item $\|x + y\| \leq \|x\| + \|y\|$
+						\end{enumerate}
+						If $\| \cdot \|$ is a norm on a vector space $X$, then the ordered pair $(V, \|\cdot\|)$ is a \alert{normed space}. If the norm is inferred from context, we often don't write it explicitly. 
+				\end{definition}
+				Two pointers here 
+				\begin{itemize}
+						\item<2-> The word ``norm'' refers to both the \emph{value} of $\|x\|$ and to the \emph{function} which maps each vector to its norm 
+								\item<3-> The norm essentially serves as a useful way to generalize the notion of vector length
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Normed Spaces Are Metric Spaces}
+				Every norm induces a metric. If $V$ is a normed space, we may define a metric on $V$ as 
+				\begin{equation*}
+						d(x, y) = \|x - y\|
+				\end{equation*}
+				A lot of the axioms of the metric follow from those of a norm. Symmetry is the only one that requires some work. We note that 
+				\begin{align*}
+						d(y, x) &= \|y - x\| \\ 
+										&= \|-(x - y)\| \\ 
+										&= \|-1(x - y)\| \\ 
+										&= |-1| \|x-y\| \\ 
+										&= \|x - y\| \\ 
+										&= d(x, y)
+				\end{align*}
+				In this case, $d$ is the \alert{metric induced by the norm}. We conclude that every normed space is a metric space. 
+		\end{frame}
+
+		\begin{frame}{Examples}
+				\begin{enumerate}
+						\item<1-> Consider the space $\R^n$. The $L^p$-norm is defined as 
+								\begin{equation*}
+										\|x\|_p = \left[ \sum_{i=1}^{n} |x_i|^p \right]^{1/p}
+								\end{equation*}
+								If $p = 2$, this is the usual Euclidean norm on $\R^n$. It induces the usual Euclidean metric on $\R^n$. 
+								\begin{itemize}
+										\item In general, the $L^p$-norm induces the $L^p$-distance on $\R^n$
+								\end{itemize}
+
+						\item<2-> Consider the function space $C[a,b]$. We define a norm on this space by 
+								\begin{equation*}
+										\|f\| = \max_{t\in [a,b]} |x(t)|
+								\end{equation*}
+								This norm induces the same metric on the function space we defined earlier. 
+				\end{enumerate}
+		\end{frame}
+
+		\begin{frame}{Banach Space}
+				\begin{definition}[Banach Space]
+						A normed space $V$ is a \alert{Banach space} if $V$ is a complete metric space under the metric induced by the norm of $V$. 
+				\end{definition}
+				Examples: 
+				\begin{itemize}
+						\item<1-> The space $\R^n$ is a Banach space. 
+						\item<2-> The function space $C[a,b]$ is a Banach space (proof omitted in interest of time)
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Normed Space That Is Not A Banach Space}
+				Consider the function space $C[a,b]$ with this norm 
+				\begin{equation*}
+						\|f\| = \int_0^1 |f(t)|\ dt 
+				\end{equation*}
+				This norm induces the metric 
+				\begin{equation*}
+						d(f, g) = \int_0^1 |f(t) - g(t)|\ dt
+				\end{equation*}
+				This metric does not make $C[a,b]$ a complete space. 
+				\begin{block}{}
+						Note that a space can only be complete with respect to some metric. We have seen metrics which make $C[a,b]$ a complete space while other metrics don't make it a complete space. The point is that idea completeness is a \emph{relationship} between a metric and the space. 
+				\end{block}
+		\end{frame}
+
+		\section{Inner Product Space \& Hilbert Spaces} 
+
+		\begin{frame}{Inner Product, Inner Product Space}
+				\begin{definition}[Inner Product]
+						Let $V$ be a vector space over a field $\F$. An \alert{inner product} on $V$ is a function $\langle \cdot, \cdot \rangle: V\times V\to \F$ such that 
+						\begin{enumerate}
+								\item $\langle x+y, z \rangle = \langle x, y\rangle + \langle y, z \rangle$ 
+								\item $\langle \alpha x, y\rangle = \alpha \langle x, y \rangle$
+								\item $\langle x, y \rangle = \overline{\langle y, x \rangle}$ (complex conjugation)
+								\item $\langle x, x \rangle \geq 0$ and $\langle x, x \rangle = 0$ iff $x = 0$. 
+						\end{enumerate}
+						If $\langle \cdot, \cdot \rangle$ is an inner product on a vector space $V$, then the ordered pair $(V, \langle \cdot, \cdot \rangle)$ is an \alert{inner product space}. Once again, we don't often write the inner product explicitly if it is implied from context. 
+				\end{definition}	
+				Note that the third axiom refers to complex conjugation. Hence, the inner product is \emph{conjugate symmetric}. If the underlying scalar field is $\R$, then the axiom becomes 
+				\begin{equation*}
+						\langle x, y \rangle = \langle y, x \rangle
+				\end{equation*}
+		\end{frame}
+
+		\begin{frame}{Inner Product Space Is A Normed Space}
+				If $V$ is an inner product space, we may define a norm on $V$ as follows: if $x\in V$, then 
+				\begin{equation*}
+						\|x\| = \langle x, x \rangle
+				\end{equation*}
+				One can verify that this is a norm on $V$ (only the triangle inequality is non-trivial). This norm is called the \alert{norm induced by the inner product}.
+
+				\begin{block}{}
+						This result shows us that every inner product space is a normed space. Moreover, since every normed space is a metric space, we have that every inner product space is a metric space too. 
+				\end{block}
+		\end{frame}
+
+		\begin{frame}{Examples}
+				\begin{itemize}
+						\item<1-> If $X = \R^n$, the standard inner product on $\R$ is 
+								\begin{equation*}
+										\langle x, y \rangle = \sum_{i=1}^{n} x_iy_i
+								\end{equation*}
+								This is often called the \emph{dot product}. It induces the $L^2$-norm on $\R^n$ (and, consequently, induces the $L^2$ distance on $\R^n)$. 
+
+						\item<2-> If $X = \C^n$, then the standard inner product becomes 
+								\begin{equation*}
+										\langle x, y \rangle = \sum_{i=1}^{n} x_i \overline{y}_i
+								\end{equation*}
+				\end{itemize}	
+		\end{frame}
+
+		\begin{frame}{Another Function Space}
+				We may consider the function space $L^2[a,b]$. This function space has a norm which somewhat resembles the $L^2$-norm for $\R^n$. 
+				\begin{equation*}
+						\|f\| = \left( \int_a^b f(t)^2 \right)^{1/2}
+				\end{equation*}
+				This norm can be generated by the following inner product 
+				\begin{equation*}
+						\langle f, g \rangle = \int_a^b f(t)g(t)\ dt
+				\end{equation*}
+
+				\begin{block}{}
+						The norm on $C[a,b]$ cannot be induced by any inner product. Hence, while all inner products induce norm, not every norm can be induced by an inner product (the $L^p$-norms for $p \neq 2$ is a common counterexample).
+				\end{block}
+		\end{frame}
+
+		\begin{frame}{Hilbert Space}
+				\begin{definition}[Hilbert Space]
+						An inner product space $V$ is a \alert{Hilbert space} if $V$ is a complete metric space under the metric induced by the inner product of $V$. 
+				\end{definition}
+				\begin{itemize}
+						\item<2-> Since every inner product space is a normed space, it follows that every Hilbert space is a Banach space. 
+						\item<3-> The converse need not hold. For instance, the norm we defined on $C[a,b]$ is not induced by any inner product. Hence, it cannot be a Hilbert space (but it is a Banach space).
+						\item<4-> $\R^n$ is a Hilbert space. 
+				\end{itemize}
+		\end{frame}
+
+		\section{Bounded \& Continuous Linear Operators}
+
+		\begin{frame}{Topological Vector Space}
+				So far, we have given results on two seemingly disjoint parts of math 
+				\begin{itemize}
+						\item Linear algebra, which gives us \emph{linear maps}
+						\item Topology, which gives us \emph{continuous operators}
+				\end{itemize}
+				We combine the two concepts in some forthcoming definitions 
+				\begin{definition}[Topological Vector Space]
+						Suppose $V$ is a vector space and let $\calT$ be a topology on $V$. We say $(V, \calT)$ is a \alert{topological vector space} if 
+						\begin{enumerate}
+								\item All one-point sets in $\calT$ are closed 
+								\item The vector space operations $+$ and $\cdot$ are continuous in $\calT$.
+						\end{enumerate}
+				\end{definition}
+		\end{frame}
+
+		\begin{frame}{Continuous Linear Map}
+				For the rest of these slides, the results will mostly concern normed spaces (and possibly Hilbert spaces). The definition of continuity is the same as that for metrizable spaces (but defined with norms in place of metrics). 
+				\begin{definition}[Continuous Linear Map]
+						Let $X$, $Y$ be normed spaces and let $T: X\to Y$ be linear. We say $T$ is \alert{continuous} at a point $x_0\in X$ if for all $\varepsilon > 0$, there is a $\delta > 0$ such that 
+						\begin{equation*}
+								\| x - x_0 \| < \delta \implies \|Tx - Tx_0\| < \varepsilon
+						\end{equation*}
+						If $T$ is continuous at all points in $X$, we simply say $T$ is \alert{continuous}.
+				\end{definition}
+				Note that we are using the same notation for the norm on $X$ and the norm on $Y$. 
+				\begin{itemize}
+						\item<2-> There is a really nice characterization of continuity for linear operators in terms of a (slightly) more familliar concept. This is discussed in the forthcoming slides. 
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Bounded Operator}
+				\begin{definition}[Bounded Linear Operator]
+						Let $X$, $Y$ be normed spaces and let $T: X\to Y$ be linear. The operator $T$ is said to be \alert{bounded} if there exists $M\in\R$ such that 
+						\begin{equation*}
+								\|Tx\| \leq M\|x\|
+						\end{equation*}
+				\end{definition}
+
+				It is useful to find the \emph{smallest possible} value for which the inequality holds. Excluding the case when $x = 0$ (which is trival and boring), we see that 
+				\begin{equation*}
+						\frac{\|Tx\|}{\|x\|} \leq M
+				\end{equation*}
+				To make this inequality hold for all $x\in X$, we simply take the \emph{supremum} over all nonzero values of $x$. This leads to another useful definition 
+		\end{frame}
+
+		\begin{frame}{Norm Of Operator}
+				\begin{definition}[Norm Of Operator]
+						Let $X,Y$ be normed spaces and $T: X\to Y$ linear. Then, the \alert{norm} of $T$, denoted $\|T\|$, is defined using two (equivalent) formulations 
+						\begin{equation*}
+								\|T\| = \sup_{\substack{x\in X \\ x \neq 0}} \frac{\|Tx\|}{\|x\|} = \sup_{\substack{x\in X \\ \|x\| = 1}} \|Tx\|
+						\end{equation*}
+				\end{definition}
+				Some important facts: 
+				\begin{itemize}
+						\item<2-> The operator $T$ is bounded if $\|T\| < \infty$ CHECK THIS 
+						\item<3-> Using the definition of norm of an operator, we may write the boundedness condition as 
+								\begin{equation*}
+										\|Tx\| \leq \|T\|\|x\|
+								\end{equation*}
+						\item<4-> The norm on an operator does indeed satisfy the norm axioms (proof omitted, in the interest of time)
+				\end{itemize}
+		\end{frame}
+
+		\begin{frame}{Norm Of Operator, Examples}
+				\begin{enumerate}
+						\item<1-> The zero operator $\mathbf{0} : X\to Y$ which sends everything to 0 is bounded and has norm 0. 
+						\item<2-> The identity operator on a nontrivial subspace is bounded and has norm 1. 
+						\item<3-> Let $\calP[0, 1]$ be the space of all polynomials on $[0, 1]$ with the usual ``max'' norm. Then, the differentiation operator 
+								\begin{equation*}
+										Tx(t) = x'(t)
+								\end{equation*}
+								is unbounded. If $x_n(t) = t^n$, then we have $\|x_n\| = 1$ but 
+								\begin{equation*}
+										\|Tx_n\| = \|nt^{n-1}\| = n
+								\end{equation*}
+								which is unbounded.
+				\end{enumerate}
+		\end{frame}
+
+		\begin{frame}{Bounded Operators On Finite Dimensional Spaces}
+				\begin{theorem}[]
+						Let $X$ be a normed space with finite dimension. Then, every linear map from $X$ to itself is bounded. 
+				\end{theorem}
+				\begin{myproof}
+						SEE THIS PROOF IN THE BOOK AND SEE IF YOU CAN UNDERSTAND IT WELL ENOUGH TO SUCCINTLY PUT IT HERE.
+				\end{myproof}
+		\end{frame}
+
+		\begin{frame}{Characterization Of Continuous Linear Maps}
+				\small
+				Now, we have this theorem which completely characterizes all continuous linear maps. 
+				\begin{theorem}[]
+						Let $X,Y$ be normed spaces and let $T: X\to Y$ be linear. Then $T$ is continuous if and only if $T$ is bounded.
+				\end{theorem}
+				We first prove the backwards direction. Assume $T$ is bounded, then $\|T\| < \infty$. Let $\varepsilon > 0$ and $x_0\in X$ be arbitrary. Let 
+				\begin{equation*}
+						\delta = \frac{\varepsilon}{\|T\|}
+				\end{equation*}
+				Assume $\|x - x_0\| < \delta$. Then, by properties of linearity and boundedness, we get 
+				\begin{align*}
+						\|Tx - Tx_0\| &= \|T(x - x_0)\| \\ 
+													&= \|T\|\|x - x_0\| \\ 
+													&< \|T\| \cdot \frac{\varepsilon}{\|T\|} \\ 
+													&= \varepsilon
+				\end{align*}
+				This shows $T$ is continuous and establishes the backward direction.
+		\end{frame}
+
+		\begin{frame}{Proof (Forward Direction)}
+				Conversely, assume $T$ is continuous. READ THE BOOK AND SEE IF YOU CAN RECREATE IT.
+		\end{frame}
+\end{document}

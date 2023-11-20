@@ -18,7 +18,6 @@
 \tcbuselibrary{breakable}
 
 % \renewcommand{\chaptername}{Lecture}
-\usetheme{Frankfurt}
 
 % ======================= HEADER ======================= 
 % Change it for different classes / purposes
@@ -31,6 +30,7 @@
 % ======================= THEOREM STYLES ======================= 
 \theoremstyle{plain}
 \newtheorem{thrm}{Theorem}
+\newtheorem{lem}{Lemma}
 \newtheorem{prop}{Proposition}
 \newtheorem{cor}{Corollary}
 \theoremstyle{definition}
@@ -44,6 +44,7 @@
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
 
 % Script fonts 
 \newcommand{\calT}{\mathcal{T}}
@@ -57,31 +58,31 @@
 \DeclareMathOperator{\Range}{Range}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\nullity}{nullity}
+\DeclareMathOperator{\trace}{tr}
 \newcommand{\betap}{{\beta'}}
 \newcommand{\identitymapV}{\mathbf{1}_V}
 \newcommand{\starsup}{\ensuremath{^{\star}}}
 \newcommand{\starstar}{\ensuremath{^{\star\star}}}
-\newcommand{\TT}{\ensuremath{^\top}}
+\newcommand{\TT}{^\top}
 % ======================= ======================= ===================
+
 
 % ======================= FOR TOPOLOGY ======================= 
 \DeclareMathOperator{\Bd}{Bd}
 \newcommand{\obar}{\overline}
 % ============================================================
 
-% ====================== PROBABILITY AND STATISTICS ================
-\newcommand{\E}[1]{\mathbb{E} \left[ #1 \right]}
+% ======================= FOR PROBABILITY/STATISTICS =======================
 \newcommand{\Prob}[1]{\mathbb{P} \left( #1 \right)}
+\newcommand{\E}[1]{\mathbb{E} \left[ #1 \right]}
 \newcommand{\V}[1]{\mathbb{V} \left[ #1 \right]}
-\newcommand{\xbar}{\overline{x}}
-\newcommand{\Xbar}{\overline{X}}
-% ==================================================================
+% ==========================================================================
 
 % Environment for exercise and solutions
 \newcounter{exerciseCtr} \setcounter{exerciseCtr}{1}
 \newenvironment{prob}[2]{
     \begin{tcolorbox}[breakable, colback = orange!25, colframe = orange, parbox = false]
-				\textbf{\textsf{Exercise \arabic{exerciseCtr} (Problem #1, \S#2)}} \par \vspace{0.3em} 
+		\textbf{\textsf{Exercise \arabic{exerciseCtr} (Problem #1, Section \S#2)}} \par \vspace{0.3em} 
     \noindent 
 }{
     \stepcounter{exerciseCtr}
@@ -95,5 +96,15 @@
     \noindent
 }{
     \end{tcolorbox}
-    \newpage 
+		\vspace{1.0em}
 }
+
+
+\makeatletter
+\newenvironment<>{myproof}[1][\proofname]{%
+  \par
+  \def\insertproofname{#1\@addpunct{.}}%
+  \pushQED{\qed}
+  \alert{\textbf{\insertproofname}} \hspace*{\fill} \\}
+{\popQED}
+\makeatother
