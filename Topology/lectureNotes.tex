@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{mathtools}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\mathbb{Q}}
@@ -27,7 +28,118 @@
 \begin{document}
 
     \maketitle
-    \tableofcontents
-    
+		
+		\section{Metric Space Preliminaries}
+		\begin{itemize}
+				\item Sequences and Cauchy sequences 
+						\begin{itemize}
+								\item A sequence converges to a point $x_0\in X$ if 
+										\begin{equation*}
+												\forall \varepsilon > 0, \exists N_{\varepsilon} \in \N : n\geq N_{\varepsilon} \implies d(x_n, x) < \varepsilon
+										\end{equation*}
 
+								\item A sequence is Cauchy if 
+										\begin{equation*}
+												\forall \varepsilon > 0, \exists N_{\varepsilon} \in \N : m,n \geq N_{\varepsilon} \implies d(x_n, x_m) < \varepsilon
+										\end{equation*}
+
+								\item Every convergent sequence is Cauchy. PROOF: use triangle inequality with $\varepsilon / 2$ argument. 
+						\end{itemize}
+
+				\item Complete metric space: every Cauchy sequence in $X$ converges to a limit in $X$. 
+						\begin{itemize}
+								\item The metric space $\Q$ is not complete. PROOF: consider the sequence of rational approximations to any irrational number. 
+								\item Discrete spaces are complete. PROOF: every Cauchy sequence is eventually constant. 
+						\end{itemize}
+		\end{itemize}
+
+		\subsection{Function Space}
+		We define the \textbf{function space}, $C[a,b]$, to be all continuous functions from $[a,b]$ to $\R$. That is 
+		\begin{equation*}
+				C[a,b] = \{f : [a,b] \to \R \mid f \text{ is continuous} \}
+		\end{equation*}
+		We define a metric on the function space as follows: for $f,g\in C[a,b]$
+		\begin{equation*}
+				d(f, g) = \max_{t\in [a,b]} |f(t) - g(t)|
+		\end{equation*}
+		\begin{itemize}
+				\item The metric is well defined (i.e. is finite). PROOF: $f-g$ is continuous and $[a,b]$ is compact. EVT implies existence of a maximum (and minimum)
+		\end{itemize}
+
+		\section{Vector Space Preliminaries}
+		\begin{itemize}
+				\item A vector space $V$ over a field $\mathbb{F}$ has two operations: vector addition and scalar multiplication where 
+						\begin{itemize}
+								\item Vector addition is an abelian group 
+								\item Scalar multiplicatin satisfies: $1v = v$, $a(bv) = (ab)v$, and two distributive laws: scalar multiplication distributes over vector addition and field addition. 
+						\end{itemize}
+
+				\item Linearly independent sets: a (finite) set $V$ is linearly independent if for scalars $c_i$ and vectors $v_i$ 
+						\begin{equation*}
+								c_1v_1 + c_2v_2 + \cdots + c_nv_n = 0 \implies c_1 = c_2 = \cdots = c_n = 0
+						\end{equation*}
+						Infinite sets are linearly independent if all of its finite subsets are L.I. 
+
+				\item If $V$ is a V.S. over $\mathbb{F}$ and $S \subseteq V$ is finite, then $\mathrm{span}\ S$ is defined as 
+						\begin{equation*}
+								\mathrm{span}\ S = \{c_1v_1 + \cdots + c_nv_n : c_i \in \mathbb{F}, v_i \in S\}
+						\end{equation*}
+						The span of an infinite set is the union of the span of all its finite subsets. 
+
+				\item If $E \subseteq X$ is a subspace, then a set $S$ is a spanning set if $\mathrm{span}\ S = E$. 
+
+				\item A basis is a linearly independent generating set. 
+						\begin{itemize}
+								\item It is the smallest generating set and the largest L.I. set (in a f.d. V.S.) 
+								\item Every vector has a unique representation in a basis
+								\item The dimension of a V.S. is the size of its basis (either finite or infinite)
+								\item Every V.S. has a basis. For f.d. spaces, all bases have the same size 
+						\end{itemize}
+		\end{itemize}
+
+		\subsection{Function Spaces}
+		We turn the function space $C[a,b]$ into a vector space over $\R$. For $f,g\in C[a,b]$ and $\alpha\in \R$, define 
+		\begin{align*}
+				(f + g)(t) = f(t) + g(t) \\ 
+				(\alpha f)(t) = \alpha f(t)
+		\end{align*}
+		The additive identity is the zero function. It is also an infinite dimensional V.S. 
+
+		\subsection{Linear Maps}
+		Linear maps preserve linear combos. So $T: X\to Y$ is linear if 
+		\begin{equation*}
+				T(c_1v_1 + c_2v_2 + \cdots c_nv_n) = c_1Tv_1 + c_2Tv_2 + \cdots + c_nTv_n
+		\end{equation*}
+		Notably, linear maps send the identity of $X$ to the identity of $Y$ (i.e. $T0 = 0$)
+		\begin{itemize}
+				\item The differentiation operator on $C[a,b]$, $Df = f'$, is linear. PROOF: derivative rules from calculus.
+		\end{itemize}
+
+		\section{Normed Spaces}
+		\begin{itemize}
+				\item A norm on a V.S. $V$ generalizes the length of a vector. It satisfies these axioms 
+						\begin{enumerate}
+								\item $\|x\| \geq 0$ with $\|x\| = 0 \Longleftrightarrow x = 0$
+								\item $\|\alpha x\| = |\alpha| \|x\|$ (norm only depends on direction) 
+								\item $\|x + y\| \leq \|x\| + \|y\|$ (satisfies triangle inequality)
+						\end{enumerate}
+						We use the word ``norm'' to mean both the value $\|x\|$ and the function $x \mapsto \|x\|$. 
+
+				\item Normed space $\implies$ metric space 
+						\begin{itemize}
+								\item Define the metric as $d(x,y) = \|x-y\|$
+						\end{itemize}
+		\end{itemize}
+
+		\subsection{Examples}
+		\begin{itemize}
+				\item The $L^p$-norms on $\R^n$ are defined by 
+						\begin{equation*}
+								\|x\|_p = \left[ \sum_{i=1}^{n} |x_i|^p \right]^{1/p}
+						\end{equation*}
+						\begin{itemize}
+								\item The $L^p$-norm induces the $L^p$-metric on $\R^n$.
+								\item If $p = 2$, this is the usual notion of length/metric on $\R^2$.
+						\end{itemize}
+		\end{itemize}
 \end{document}
