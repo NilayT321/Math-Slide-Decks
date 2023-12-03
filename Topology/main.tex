@@ -2,7 +2,7 @@
 \usetheme{Madrid} 
 \usepackage{../format} % Required for inserting images 
 
-\title{Banach \& Hilbert Spaces: An Introduction to Functional Analysis} 
+\title[Banach \& Hilbert Spaces; Functional Analysis]{Banach \& Hilbert Spaces: An Introduction to Functional Analysis} 
 \subtitle{} 
 \author{Nilay Tripathi}
 \date{December 2023}
@@ -172,12 +172,7 @@
                 \item If $\Dim V < \infty$, then $V$ is \alert{finite-dimensional}. Otherwise, it is \alert{infinite dimensional}.
             \end{enumerate}
         \end{definition}
-        Some things to note 
-        \begin{itemize}
-            \item<2-> Every vector spaces has a basis (for infinite dimensional spaces, this requires axiom of choice). 
-            \item<3-> All bases of finite dimensional vector spaces are of the same size. Hence, $\Dim V$ is well-defined
-        \end{itemize}
-        \only<4->{In functional analysis, we often consider infinite dimensional vector spaces over finite dimensional ones.}
+        In functional analysis, we often consider infinite dimensional vector spaces over finite dimensional ones.
     \end{frame}
 
 		\begin{frame}{Function Space Is A Vector Space}
@@ -204,10 +199,6 @@
 						\end{equation*}
 						Note that we use the notation $Tx$ to mean $T(x)$. This is a common shorthand used in functional analysis.
 				\end{definition}
-				A consequence of this definition is that linear maps send the identity of $X$ to the identity of $Y$. This is written as $T0 = 0$. 
-				\begin{itemize}
-						\item Here, we note that the $0$ on the left is the identity of $X$ while the $0$ on the right is the identity of $Y$. 
-				\end{itemize}
 		\end{frame}
 
 		\begin{frame}{Example}
@@ -237,11 +228,6 @@
 						\end{enumerate}
 						If $\| \cdot \|$ is a norm on a vector space $X$, then the ordered pair $(V, \|\cdot\|)$ is a \alert{normed space}. If the norm is inferred from context, we often don't write it explicitly. 
 				\end{definition}
-				Two pointers here 
-				\begin{itemize}
-						\item<2-> The word ``norm'' refers to both the \emph{value} of $\|x\|$ and to the \emph{function} which maps each vector to its norm 
-								\item<3-> The norm essentially serves as a useful way to generalize the notion of vector length
-				\end{itemize}
 		\end{frame}
 
 		\begin{frame}{Normed Spaces Are Metric Spaces}
@@ -274,11 +260,14 @@
 
 						\item<2-> Consider the function space $C[a,b]$. We define a norm on this space by 
 								\begin{equation*}
-										\|f\| = \max_{t\in [a,b]} |x(t)|
+										\|f\| = \max_{t\in [a,b]} |f(t)|
 								\end{equation*}
 								This norm induces the same metric on the function space we defined earlier. 
+
+						\item<3-> A metric space need not be a normed space. The discrete metric on $\R$ is not induced by any norm.
 				\end{enumerate}
 		\end{frame}
+
 
 		\begin{frame}{Banach Space}
 				\begin{definition}[Banach Space]
@@ -286,13 +275,13 @@
 				\end{definition}
 				Examples: 
 				\begin{itemize}
-						\item<1-> The space $\R^n$ is a Banach space. 
-						\item<2-> The function space $C[a,b]$ is a Banach space (proof omitted in interest of time)
+						\item The space $\R^n$ is a Banach space. 
+						\item The function space $C[a,b]$ is a Banach space (proof omitted in interest of time)
 				\end{itemize}
 		\end{frame}
 
 		\begin{frame}{Normed Space That Is Not A Banach Space}
-				Consider the function space $C[a,b]$ with this norm 
+				Consider the function space $C[0,1]$ with this norm 
 				\begin{equation*}
 						\|f\| = \int_0^1 |f(t)|\ dt 
 				\end{equation*}
@@ -301,9 +290,6 @@
 						d(f, g) = \int_0^1 |f(t) - g(t)|\ dt
 				\end{equation*}
 				This metric does not make $C[a,b]$ a complete space. 
-				\begin{block}{}
-						Note that a space can only be complete with respect to some metric. We have seen metrics which make $C[a,b]$ a complete space while other metrics don't make it a complete space. The point is that idea completeness is a \emph{relationship} between a metric and the space. 
-				\end{block}
 		\end{frame}
 
 		\section{Inner Product Space \& Hilbert Spaces} 
@@ -319,27 +305,27 @@
 						\end{enumerate}
 						If $\langle \cdot, \cdot \rangle$ is an inner product on a vector space $V$, then the ordered pair $(V, \langle \cdot, \cdot \rangle)$ is an \alert{inner product space}. Once again, we don't often write the inner product explicitly if it is implied from context. 
 				\end{definition}	
-				Note that the third axiom refers to complex conjugation. Hence, the inner product is \emph{conjugate symmetric}. If the underlying scalar field is $\R$, then the axiom becomes 
-				\begin{equation*}
-						\langle x, y \rangle = \langle y, x \rangle
-				\end{equation*}
 		\end{frame}
 
 		\begin{frame}{Inner Product Space Is A Normed Space}
 				If $V$ is an inner product space, we may define a norm on $V$ as follows: if $x\in V$, then 
 				\begin{equation*}
-						\|x\| = \langle x, x \rangle
+						\|x\| = \sqrt{\langle x, x \rangle}
 				\end{equation*}
 				One can verify that this is a norm on $V$ (only the triangle inequality is non-trivial). This norm is called the \alert{norm induced by the inner product}.
-
+				
 				\begin{block}{}
-						This result shows us that every inner product space is a normed space. Moreover, since every normed space is a metric space, we have that every inner product space is a metric space too. 
+						From the observations and examples stated previously, we see 
+						\begin{equation*}
+								\text{inner product space} \implies \text{normed space} \implies \text{metric space}
+						\end{equation*}
+						But the reverse implications need not be true.
 				\end{block}
 		\end{frame}
 
 		\begin{frame}{Examples}
 				\begin{itemize}
-						\item<1-> If $X = \R^n$, the standard inner product on $\R$ is 
+						\item<1-> If $X = \R^n$, the standard inner product on $\R^n$ is 
 								\begin{equation*}
 										\langle x, y \rangle = \sum_{i=1}^{n} x_iy_i
 								\end{equation*}
@@ -352,19 +338,15 @@
 				\end{itemize}	
 		\end{frame}
 
-		\begin{frame}{Another Function Space}
-				We may consider the function space $L^2[a,b]$. This function space has a norm which somewhat resembles the $L^2$-norm for $\R^n$. 
-				\begin{equation*}
-						\|f\| = \left( \int_a^b f(t)^2 \right)^{1/2}
-				\end{equation*}
-				This norm can be generated by the following inner product 
-				\begin{equation*}
-						\langle f, g \rangle = \int_a^b f(t)g(t)\ dt
-				\end{equation*}
-
-				\begin{block}{}
-						The norm on $C[a,b]$ cannot be induced by any inner product. Hence, while all inner products induce norm, not every norm can be induced by an inner product (the $L^p$-norms for $p \neq 2$ is a common counterexample).
-				\end{block}
+		\begin{frame}{Inner Product Space Need Not Be Normed Space}
+				Not every norm can be induced by an inner product 
+				\begin{itemize}
+						\item The $L^p$ norm for $p = 2$ is the usual Eucidean norm
+								\begin{itemize}
+										\item It can be induced by the standard inner product 
+								\end{itemize}
+						\item However, for $p \neq 2$, the $L^p$-norm cannot be induced by any inner product
+				\end{itemize}
 		\end{frame}
 
 		\begin{frame}{Hilbert Space}
@@ -372,9 +354,9 @@
 						An inner product space $V$ is a \alert{Hilbert space} if $V$ is a complete metric space under the metric induced by the inner product of $V$. 
 				\end{definition}
 				\begin{itemize}
-						\item<2-> Since every inner product space is a normed space, it follows that every Hilbert space is a Banach space. 
-						\item<3-> The converse need not hold. For instance, the norm we defined on $C[a,b]$ is not induced by any inner product. Hence, it cannot be a Hilbert space (but it is a Banach space).
-						\item<4-> $\R^n$ is a Hilbert space. 
+						\item Since every inner product space is a normed space, it follows that every Hilbert space is a Banach space. 
+						\item The converse need not hold. For instance, the norm we defined on $C[a,b]$ is not induced by any inner product. Hence, it cannot be a Hilbert space (but it is a Banach space).
+						\item $\R^n$ is a Hilbert space. 
 				\end{itemize}
 		\end{frame}
 
@@ -397,7 +379,6 @@
 		\end{frame}
 
 		\begin{frame}{Continuous Linear Map}
-				For the rest of these slides, the results will mostly concern normed spaces (and possibly Hilbert spaces). The definition of continuity is the same as that for metrizable spaces (but defined with norms in place of metrics). 
 				\begin{definition}[Continuous Linear Map]
 						Let $X$, $Y$ be normed spaces and let $T: X\to Y$ be linear. We say $T$ is \alert{continuous} at a point $x_0\in X$ if for all $\varepsilon > 0$, there is a $\delta > 0$ such that 
 						\begin{equation*}
@@ -405,10 +386,6 @@
 						\end{equation*}
 						If $T$ is continuous at all points in $X$, we simply say $T$ is \alert{continuous}.
 				\end{definition}
-				Note that we are using the same notation for the norm on $X$ and the norm on $Y$. 
-				\begin{itemize}
-						\item<2-> There is a really nice characterization of continuity for linear operators in terms of a (slightly) more familliar concept. This is discussed in the forthcoming slides. 
-				\end{itemize}
 		\end{frame}
 
 		\begin{frame}{Bounded Operator}
@@ -435,12 +412,12 @@
 				\end{definition}
 				Some important facts: 
 				\begin{itemize}
-						\item<2-> The operator $T$ is bounded if $\|T\| < \infty$ 
-						\item<3-> Using the definition of norm of an operator, we may write the boundedness condition as 
+						\item The operator $T$ is bounded if $\|T\| < \infty$ 
+						\item Using the definition of norm of an operator, we may write the boundedness condition as 
 								\begin{equation*}
 										\|Tx\| \leq \|T\|\|x\|
 								\end{equation*}
-						\item<4-> The norm on an operator does indeed satisfy the norm axioms (proof omitted, in the interest of time)
+						\item The norm on an operator does indeed satisfy the norm axioms (proof omitted, in the interest of time)
 				\end{itemize}
 		\end{frame}
 
@@ -516,6 +493,95 @@
 						\end{equation*}
 						If the set $G_T$ is closed in the product space $X\times Y$, the linear operator $T$ is a \alert{closed linear operator}.
 				\end{definition}
+				Let $X$ and $Y$ be normed spaces. We define a norm on the \alert{product space} $X\times Y$ as follows: 
+				\begin{equation*}
+						\|(x,y)\| = \|x\|_X + \|y\|_Y
+				\end{equation*}
+		\end{frame}
 
+		\begin{frame}{Product Of Banach Spaces Is Banach Space}
+				\begin{theorem}[]
+						Let $X$ and $Y$ be Banach spaces. Then, $X\times Y$ is a Banach space.
+				\end{theorem}
+				Let $z_n = (x_n, y_n)$ be an arbitrary Cauchy sequence in $X\times Y$. Then, for some $N\in \N$ we note that $m,n \geq N$ implies 
+				\begin{equation*}
+						\|z_n - z_m\| = \|x_n - x_m\| + \|y_n - y_m\| < \varepsilon
+				\end{equation*}
+				Thus, this shows that $(x_n), (y_n)$ are also Cauchy sequences. Since $X,Y$ are complete, these Cauchy sequences converge. Say $(x_n) \to x$ and $(y_n) \to y$. \par 
+
+				We claim that $z_n \to (x, y) = z$. 
+		\end{frame}
+
+		\begin{frame}{Product Of Banach Spaces (cont.)}
+				Since $(x_n)$, $(y_n)$ converge, there exists $N_1, N_2\in \N$ such that 
+				\begin{align*}
+						n\geq N_1 \implies \|x_n - x\| < \frac{\varepsilon}{2} \\ 
+						n\geq N_2 \implies \|y_n - y\| < \frac{\varepsilon}{2}
+				\end{align*}
+				So we get 
+				\begin{align*}
+						\|z_n - z\| &= \|x_n - x\| + \|y_n - y\| \\ 
+												&< \frac{\varepsilon}{2} + \frac{\varepsilon}{2} \\ 
+												&= \varepsilon
+				\end{align*}
+				Thus, we have $(z_n) \to z$. So, all Cauchy sequences in $X\times Y$ converge; so $X\times Y$ is a complete space.
+		\end{frame}
+
+		\begin{frame}{Open Mapping Theorem, Bounded Inverse Theorem}
+				\begin{definition}[Open Mapping]
+						If $X$ and $Y$ are metric spaces, then $T: X\to Y$ is an \alert{open mapping} if the image of open sets in $X$ is open in $Y$. 
+				\end{definition}
+
+				\begin{theorem}[Open Mapping Theorem]
+						Every surjective bounded linear operator between two Banach spaces is an open mapping. 
+				\end{theorem}
+
+				\begin{theorem}[Bounded Inverse Theorem]
+						If $T$ is a bijective linear operator satisfying the conditions of the open mapping theorem, then $T^{-1}$ is bounded.
+				\end{theorem}
+		\end{frame}
+
+		\begin{frame}{Closed Graph Theorem}
+				\begin{theorem}[Closed Graph Theorem]
+						Let $X$ and $Y$ be Banach spaces and $D \subseteq X$. Let $T: D\to Y$ be a closed linear operator. Then $T$ is bounded if $D$ is closed in $X$.
+				\end{theorem}
+				We consider a ``natural'' mapping $P: G_T \to D$ defined by 
+				\begin{equation*}
+						P(x, Tx) = x
+				\end{equation*}
+				The map $P$ is linear since 
+				\begin{equation*}
+						P(x + cy, T(x + cy)) = P(x + cy, Tx + cTy) = P[(x, Tx) + c(y, Ty)] 
+				\end{equation*}
+				The map $P$ is bounded since 
+				\begin{equation*}
+						\|P(x, Tx)\| = \|x\| \leq \|x\| + \|Tx\| = \|(x, Tx)\|
+				\end{equation*}
+		\end{frame}
+
+		\begin{frame}{Closed Graph Theorem, Proof (cont.)}
+				Note that $P$ is bijective. The inverse mapping is 
+				\begin{equation*}
+						P^{-1}(x) = (x, Tx)
+				\end{equation*}
+				Note that $G_T$ and $D$ are both complete spaces ($G_T$ and $D$ are closed subsets of complete metric spaces). The \textbf{bounded inverse theorem} holds and we get that $P^{-1}$ is bounded i.e. there exists $M$ such that $\|P^{-1}(x)\| \leq M\|x\|$. \par 
+		\end{frame}
+
+		\begin{frame}{Closed Graph Theorem, Proof (cont.)}
+				We finish the proof by noting that 
+				\begin{align*}
+						\|Tx\| &\leq \|x\| + \|Tx\| \\ 
+									 &= \|(x, Tx)\| \\ 
+									 &= \|P^{-1}(x)\| \\ 
+									 &\leq M\|x\|
+				\end{align*}
+				Hence $\|Tx\| \leq M\|x\|$, and so $T$ is bounded. 
+		\end{frame}
+
+		\begin{frame}{References}
+				\begin{itemize}
+						\item Kreyszig, \emph{Introductory Functional Analysis with Applications} 
+						\item Rudin, \emph{Functional Analysis}
+				\end{itemize}
 		\end{frame}
 \end{document}

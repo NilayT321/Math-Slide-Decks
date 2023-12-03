@@ -6,10 +6,12 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtools}
+\usepackage{centernot}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
 
 \theoremstyle{plain}
 \newtheorem{thrm}{Theorem}
@@ -50,6 +52,7 @@
 						\begin{itemize}
 								\item The metric space $\Q$ is not complete. PROOF: consider the sequence of rational approximations to any irrational number. 
 								\item Discrete spaces are complete. PROOF: every Cauchy sequence is eventually constant. 
+								\item Briefly comment about equivalent formulas of completeness in $\R$ (i.e. least upper bound property, montone convergence property, etc.). Cauchy completeness is the most general definition and works in all metric spaces.
 						\end{itemize}
 		\end{itemize}
 
@@ -139,7 +142,229 @@
 						\end{equation*}
 						\begin{itemize}
 								\item The $L^p$-norm induces the $L^p$-metric on $\R^n$.
-								\item If $p = 2$, this is the usual notion of length/metric on $\R^2$.
+								\item If $p = 2$, this is the usual notion of length/distance on $\R^2$.
+						\end{itemize}
+
+				\item Consider the function space $C[a,b]$. Define a norm on this space as 
+						\begin{equation*}
+								\|f\| = \max_{t\in [a,b]} |f(t)|
+						\end{equation*}
+
+				\item Metric space $\centernot\implies$ normed space: the discrete metric on $\R$ is not induced by any norm. 
+		\end{itemize}
+
+		\subsection{Banach Spaces}
+		A \textbf{Banach space} is any normed space where the norm induces a complete metric space. 
+		\begin{itemize}
+				\item $\R^n$ is a Banach space (when we consider its usual Euclidean norm) 
+				\item The function space $C[a,b]$ is a Banach space, under its usual metric. 
+				\item Not all normed spaces are Banach spaces. 
+						\begin{itemize}
+								\item Define a different norm on $C[a,b]$ as: 
+										\begin{equation*}
+												\|f\| = \int_0^1 |f(t)|\ dt 
+										\end{equation*}
+										The metric induced by the norm is 
+										\begin{equation*}
+												d(f,g) = \int_0^1 |f(t) - g(t)| \ dt
+										\end{equation*}
+										Under this metric $C[a,b]$ is not a complete space.
 						\end{itemize}
 		\end{itemize}
+
+		\section{Inner Product Spaces}
+		An \textbf{inner product} satisfies the following axioms 
+		\begin{enumerate}
+				\item $\langle x + y, z \rangle = \langle x, y \rangle + \langle y, z \rangle$ 
+				\item $\langle \alpha x, y \rangle = \alpha \langle x, y \rangle$
+				\item $\langle x, y \rangle = \overline{\langle y, x \rangle}$ 
+				\item $\langle x, x \rangle \geq 0$ with $\langle x, x \rangle = 0 \iff x = 0$
+		\end{enumerate}
+		If the V.S. is over $\R$, axiom 3 becomes $\langle x, y \rangle = \langle y, x \rangle$.
+		\begin{itemize}
+				\item We have inner product space $\implies$ normed space. A norm may be defined as 
+						\begin{equation*}
+								\|x\| = \sqrt{\langle x, x\rangle}
+						\end{equation*}
+				\item However, the reverse implication is NOT true. EXAMPLE: $L^p$-norms when $p\neq 2$. 
+		\end{itemize}
+
+		\subsection{Examples}
+		\begin{itemize}
+				\item The standard inner product on $\R^n$ is 
+						\begin{equation*}
+								\langle x, y \rangle = \sum_{i=1}^{n} x_i y_i
+						\end{equation*}
+						It is better known as the dot product. It induces the Euclidean norm on $\R^n$. 
+
+				\item If $X = \C^n$ instead, then the standard inner product becomes 
+						\begin{equation*}
+								\langle x, y \rangle = \sum_{i=1}^{n} x_i \overline{y_i}
+						\end{equation*}
+		\end{itemize}
+
+		\subsection{Hilbert Space}
+		A \textbf{Hilbert space} is an I.P.S. where the norm induced by the inner product induces a complete metric space. 
+		\begin{itemize}
+				\item Hilbert space $\implies$ Banach space 
+				\item Converse not true. EXAMPLE: the max norm on $C[a,b]$ is not given by any inner product, so it cannot be a Hilbert space
+				\item $\R^n$, with the Euclidean norm/standard inner product is a Hilbert space. 
+		\end{itemize}
+
+		\section{Topological Vector Spaces}
+		We now combine the notions of vector spaces and topological spaces. A \textbf{topological vector space} is a vector space with a topology such that 
+		\begin{enumerate}
+				\item All one point sets in closed 
+				\item The vector space operations $+$ and $\cdot$ are continuous
+		\end{enumerate}
+
+		\subsection{Continuous \& Bounded Linear Map}
+		\begin{itemize}
+				\item We say a linear map $T: X\to Y$ is continuous at $x_0\in X$ if for every $\varepsilon > 0$, there is a $\delta > 0$ such that 
+				\begin{equation*}
+						\|x - x_0\| < \delta \implies \|Tx - Tx_0\| < \varepsilon
+				\end{equation*}
+				If $T$ is continuous at all points in $X$, then $T$ is continuous. 
+
+				\item We say a linear map $T: X\to Y$ is bounded if there exists $M\in\R$ such that 
+						\begin{equation*}
+								\|Tx\| \leq M\|x\|
+						\end{equation*}
+
+				\item We define the norm of an operator as follows 
+						\begin{equation*}
+								\|T\| = \sup_{\substack{x\in X \\ x \neq 0}} \frac{\|Tx\|}{\|x\|} = \sup_{\substack{x\in X \\ \|x\| = 1}} \|Tx\|
+						\end{equation*}
+						This gives us that for any bounded operator: $\|Tx\| \leq \|T\|\|x\|$. 
+						\begin{itemize}
+								\item The zero operator has norm 0. PROOF: 
+										\begin{equation*}
+												\frac{\|Tx\|}{\|x\|} = \frac{\|0\|}{\|x\|} = 0
+										\end{equation*}
+								\item The identity operator has norm 1. PROOF: 
+										\begin{equation*}
+												\frac{\|Tx\|}{\|x\|} = \frac{\|x\|}{\|x\|} = 1
+										\end{equation*}
+								\item The differentiation operator $D(f) = f'$ is unbounded. PROOF: consider polynomials on $[0, 1]$. If $x_n(t) = t^n$, then 
+										\begin{equation*}
+												\|Tx_n\| = \|nt^{n-1}\| = n
+										\end{equation*}
+						\end{itemize}
+		\end{itemize}
+
+		\subsection{Continuous $\iff$ Bounded} 
+		We prove the following result. 
+		\begin{thrm}[]
+				A linear operator $T: X\to Y$, between normed spaces is continuous iff it is bounded. 
+		\end{thrm}
+		\begin{proof}
+				Assume $T$ is bounded. Then, we have $\|T\| < \infty$. Let $\varepsilon > 0$ and $x_0\in X$ be arbitrary. Let 
+				\begin{equation*}
+						\delta = \frac{\varepsilon}{\|T\|}
+				\end{equation*}
+				and assume $\|x - x_0\| < \delta$. Then, we have 
+				\begin{align*}
+						\|Tx - Tx_0\| &= \|T(x - x_0)\| \\ 
+													&\leq \|T\|\|x - x_0\| \\ 
+													&< \|T\| \cdot \frac{\varepsilon}{\|T\|} \\ 
+													&= \varepsilon
+				\end{align*}
+				Hence, $T$ is continuous as it is continuous at all points. \par 
+
+				Conversely, assume $T$ is continuous. Then, $T$ is continuous at $x = 0$. So, there is a $\delta > 0$ such that 
+				\begin{equation*}
+						\|x\| < \delta \implies \|Tx\| < 1
+				\end{equation*}
+				Rewrite $x$ as 
+				\begin{equation*}
+						x = \frac{2x \delta}{\|x\|} \cdot \frac{\|x\|}{2 \delta}
+				\end{equation*}
+				So 
+				\begin{align*}
+						Tx &= T \left( \frac{2x \delta}{\|x\|} \cdot \frac{\|x\|}{2 \delta} \right) \\ 
+							 &= \frac{2\|x\|}{\delta} T \left( \frac{x}{\|x\|} \cdot \frac{\delta}{2} \right)
+				\end{align*}
+				Put $v = \frac{x}{\|x\|} \cdot \frac{\delta}{2}$ and note that 
+				\begin{equation*}
+						\|v\| = \frac{\delta}{2} \left\| \frac{x}{\|x\|} \right\| = \frac{\delta}{2} < \delta
+				\end{equation*}
+				So $\|Tv\| < 1$. Hence, we see that 
+				\begin{equation*}
+						\|Tx\| < \frac{2}{\delta}\|x\|
+				\end{equation*}
+				which shows that $T$ is bounded. 
+		\end{proof}
+
+		\section{Closed Graph Theorem} 
+
+		\subsection{Open Mapping Theorem} 
+		We state the open mapping theorem, and its corollary, the bounded inverse theorem. 
+		\begin{itemize}
+				\item An open mapping sends open sets in the domain to open sets in the range i.e. the image of open sets is open 
+				\item Open Mapping Thrm: every surjective bounded linear operator between Banach spaces is an open mapping 
+						\begin{itemize}
+								\item IDEA OF PROOF: similar to the ``neighborhood trick'': show that for an open set $U$, any point in $T(U)$ contains an open set contained in $T(U)$. 
+								\item However, the details are complicated since we are in an arbitrary space 
+						\end{itemize}
+				\item Bounded Inverse Thrm: if $T$ is a bijective, continuous linear operator, then $T^{-1}$ is bounded. 
+						\begin{itemize}
+								\item IDEA OF PROOF: show $T^{-1}$ is continuous. Indeed, $T: X\to Y$ maps open sets to open sets. But this is roughly the same as the preimage of open sets in $X$ being open under $T^{-1}$. Thus, $T^{-1}$ is continuous and, therefore, bounded. 
+						\end{itemize}
+		\end{itemize}
+
+		\subsection{Norm On Product Space}
+		If $X,Y$ are Banach spaces, we define a norm on $X\times Y$ as follows 
+		\begin{equation*}
+				\|(x,y)\| = \|x\| + \|y\|
+		\end{equation*}
+		We remark: there are other norms on the product space (e.g. the ``max'' norm), but the closed graph theorem will go through for all of them. I think this is the easiest one. 
+		\begin{thrm}[]
+				If $X,Y$ are Banach spaces, then so is $X\times Y$. 
+		\end{thrm}
+		\begin{proof}[Proof Sketch]
+				Let $(z_n)$ be an arbitrary Cauchy sequence. W.T.S. $(z_n)$ converges
+				\begin{itemize}
+						\item From definition of the product norm, we have $(x_n)$ and $(y_n)$ are Cauchy
+						\item The two Cauchy sequences converge. Then, $(z_n)$ converges to the ordered pair (limit of $x_n$, limit of $y_n$) 
+						\item To show this, use a $\varepsilon/2$ argument. 
+				\end{itemize}
+		\end{proof}
+
+		\subsection{Proof of Closed Graph Theorem}
+		A linear operator $T: X\to Y$ if the graph of $T$ 
+		\begin{equation*}
+				G_T = \{(x, Tx) : x\in X\}
+		\end{equation*}
+		is a closed set in $X\times Y$. 
+		\begin{thrm}[Closed Graph Thrm]
+				Suppose $T: D\to Y$ is a closed linear operator. Then, $T$ is bounded if $D$ is closed. 
+		\end{thrm}
+		\begin{proof}[Proof Idea]
+				\begin{itemize}
+						\item Define a linear map $P: G_T \to D$ as 
+								\begin{equation*}
+										P(x, Tx) = x
+								\end{equation*}
+						\item $P$ is linear since 
+								\begin{equation*}
+										P(x+cy, T(x+cy)) = P(x+cy, Tx+cTy) = P[(x, Tx) + c(y, Ty)] 
+								\end{equation*}
+						\item $P$ is bounded since 
+								\begin{equation*}
+										\|P(x, Tx)\| = \|x\| \leq \|x\| + \|Tx\| = \|(x, Tx)\|
+								\end{equation*}
+						\item $P$ is bijective. 
+						\item $G_T$ is a closed subset of $X\times Y$, a complete space $\implies G_T$ is closed. 
+						\item Same argument shows $D$ is a complete space. 
+						\item Invoke the bounded inverse theorem to get that $P^{-1}$ is bounded. 
+						\item The proof is finished by noting that 
+								\begin{align*}
+										\|Tx\| &\leq \|x\| + \|Tx\| \\ 
+													 &= \|(x, Tx)\| \\ 
+													 &= \|P^{-1}(x)\| \\ 
+													 &\leq M\|x\|
+								\end{align*}
+								So $T$ is bounded, as desired. 
+				\end{itemize}
+		\end{proof}
 \end{document}
